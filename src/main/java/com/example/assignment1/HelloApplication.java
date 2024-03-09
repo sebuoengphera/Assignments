@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -37,6 +38,7 @@ public class HelloApplication extends Application {
             "/Images/image8.jpg"
     };
     private ImageView fullImageView;
+    private int currentImageIndex = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -102,10 +104,30 @@ public class HelloApplication extends Application {
         fullPictureHeading.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         vbox.getChildren().addAll(fullPictureHeading, fullImageView);
 
+        // Navigation buttons
+        Button prevButton = new Button("Previous");
+        prevButton.setOnAction(event -> navigateToPreviousImage());
+        Button nextButton = new Button("Next");
+        nextButton.setOnAction(event -> navigateToNextImage());
+
+        HBox navButtonsBox = new HBox(10, prevButton, nextButton);
+        navButtonsBox.setAlignment(Pos.CENTER);
+        vbox.getChildren().add(navButtonsBox);
+
         Stage stage = new Stage();
         stage.setScene(new Scene(vbox));
         stage.setTitle("Full Image");
         stage.show();
+    }
+
+    private void navigateToPreviousImage() {
+        currentImageIndex = (currentImageIndex - 1 + FULL_IMAGES.length) % FULL_IMAGES.length;
+        displayFullImage(FULL_IMAGES[currentImageIndex]);
+    }
+
+    private void navigateToNextImage() {
+        currentImageIndex = (currentImageIndex + 1) % FULL_IMAGES.length;
+        displayFullImage(FULL_IMAGES[currentImageIndex]);
     }
     public static void main(String[] args) {
         launch();
