@@ -9,8 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -39,18 +37,31 @@ public class HelloApplication extends Application {
     };
     private ImageView fullImageView;
     private int currentImageIndex = 0;
+    private VBox vbox;
+    private Text thumbnailHeading;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        VBox root = new VBox(10);
-        root.setPadding(new Insets(10));
-        root.setAlignment(Pos.CENTER);
+        vbox = new VBox(10);
+        vbox.setPadding(new Insets(10));
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setStyle("-fx-background-color: lightgray;");
 
-        // Heading for thumbnail pictures
-        Text thumbnailHeading = new Text("Thumbnail Pictures");
-        thumbnailHeading.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        root.getChildren().add(thumbnailHeading);
+        // Heading for thumbnails
+        thumbnailHeading = new Text("THUMBNAILS");
+        thumbnailHeading.getStyleClass().add("heading");
+        vbox.getChildren().add(thumbnailHeading);
 
+        vbox.getChildren().add(displayThumbnails());
+
+        Scene scene = new Scene(vbox, 800, 600);
+        // Link CSS file
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Image Gallery");
+        primaryStage.show();
+    }
+    private VBox displayThumbnails() {
         VBox thumbnailsBox = new VBox(10);
         thumbnailsBox.setAlignment(Pos.CENTER);
 
@@ -64,6 +75,7 @@ public class HelloApplication extends Application {
         for (int i = 0; i < THUMBNAILS.length; i++) {
             Image thumbnail = new Image(getClass().getResourceAsStream(THUMBNAILS[i]));
             ImageView thumbnailView = new ImageView(thumbnail);
+            thumbnailView.getStyleClass().add("thumbnail-image"); // Apply CSS class
             thumbnailView.setFitWidth(150); // Set width to 150 pixels
             thumbnailView.setPreserveRatio(true);
             int index = i; // For lambda expression
@@ -77,47 +89,57 @@ public class HelloApplication extends Application {
                 thumbnailsRow3.getChildren().add(thumbnailView);
             }
         }
-
         thumbnailsBox.getChildren().addAll(thumbnailsRow1, thumbnailsRow2, thumbnailsRow3);
-        root.getChildren().add(thumbnailsBox);
-
-        Scene scene = new Scene(root, 800, 600);
-        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Image Gallery");
-        primaryStage.show();
+        return thumbnailsBox;
     }
     private void displayFullImage(String imageUrl) {
+        // Remove THUMBNAILS heading and thumbnails
+        vbox.getChildren().remove(thumbnailHeading);
+
+        // Remove full image view if it exists
+        vbox.getChildren().removeIf(node -> node instanceof VBox);
+
+        VBox fullImageBox = new VBox(10);
+        fullImageBox.setAlignment(Pos.CENTER);
+
+        // Heading for the full picture
+        Text fullPictureHeading = new Text("FULL PICTURE");
+        fullPictureHeading.getStyleClass().add("heading");
+        fullImageBox.getChildren().add(fullPictureHeading);
+
         Image fullImage = new Image(getClass().getResourceAsStream(imageUrl));
         fullImageView = new ImageView(fullImage);
+        fullImageView.getStyleClass().add("full-image");
         fullImageView.setFitWidth(600);
         fullImageView.setFitHeight(400);
         fullImageView.setPreserveRatio(true);
-
-        VBox vbox = new VBox(10);
-        vbox.setPadding(new Insets(10));
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setStyle("-fx-background-color: lightgray;");
-
-        // Heading for the full picture
-        Text fullPictureHeading = new Text("The Full Picture");
-        fullPictureHeading.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        vbox.getChildren().addAll(fullPictureHeading, fullImageView);
+        fullImageBox.getChildren().add(fullImageView);
 
         // Navigation buttons
         Button prevButton = new Button("Previous");
+        prevButton.getStyleClass().add("button");
         prevButton.setOnAction(event -> navigateToPreviousImage());
         Button nextButton = new Button("Next");
+
+        nextButton.getStyleClass().add("button");
         nextButton.setOnAction(event -> navigateToNextImage());
+        Button backButton = new Button("Back");
 
-        HBox navButtonsBox = new HBox(10, prevButton, nextButton);
+        backButton.getStyleClass().add("button");
+        backButton.setOnAction(event -> {
+            // Remove full image view
+            vbox.getChildren().remove(fullImageBox);
+            // Add back the THUMBNAILS heading
+            vbox.getChildren().add(thumbnailHeading);
+            // Add back the thumbnails
+            vbox.getChildren().add(displayThumbnails());
+        });
+
+        HBox navButtonsBox = new HBox(10, prevButton, nextButton, backButton);
         navButtonsBox.setAlignment(Pos.CENTER);
-        vbox.getChildren().add(navButtonsBox);
+        fullImageBox.getChildren().add(navButtonsBox);
 
-        Stage stage = new Stage();
-        stage.setScene(new Scene(vbox));
-        stage.setTitle("Full Image");
-        stage.show();
+        vbox.getChildren().add(fullImageBox);
     }
 
     private void navigateToPreviousImage() {
@@ -129,6 +151,7 @@ public class HelloApplication extends Application {
         currentImageIndex = (currentImageIndex + 1) % FULL_IMAGES.length;
         displayFullImage(FULL_IMAGES[currentImageIndex]);
     }
+
     public static void main(String[] args) {
         launch();
     }

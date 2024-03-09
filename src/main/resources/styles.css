@@ -1,27 +1,37 @@
 /* styles.css */
 
-.thumbnail {
+/* Style for the main VBox */
+.vbox {
+    -fx-background-color: lightgray;
+}
+
+/* Style for the heading */
+.heading {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+}
+
+/* Style for thumbnail images */
+.thumbnail-image {
     -fx-border-color: black;
     -fx-border-width: 1px;
-    -fx-padding: 5px;
 }
 
+/* Style for full-size images */
 .full-image {
     -fx-border-color: black;
-    -fx-border-width: 2px;
+    -fx-border-width: 1px;
 }
 
-.button-bar {
-    -fx-spacing: 10px;
-}
-
-.button-bar > .button {
-    -fx-background-color: lightgray;
+/* Style for navigation buttons */
+.button {
+    -fx-background-color: lightblue;
+    -fx-font-size: 14px;
     -fx-padding: 5px 10px;
-    -fx-border-radius: 5px;
 }
 
-.button-bar > .button:hover {
-    -fx-background-color: gray;
-    -fx-text-fill: white;
+/* Hover effect for navigation buttons */
+.button:hover {
+    -fx-background-color: lightcyan;
 }
