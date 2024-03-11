@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
-    static final String[] THUMBNAILS = {
+    final String[] THUMBNAILS = {
             "/Images/thumbnail.jpg",
             "/Images/thumbnail1.jpg",
             "/Images/thumbnail2.jpg",
@@ -24,7 +24,7 @@ public class HelloApplication extends Application {
             "/Images/thumbnail7.jpg",
             "/Images/thumbnail8.jpg"
     };
-    static final String[] FULL_IMAGES = {
+    final String[] FULL_IMAGES = {
             "/Images/image.jpg",
             "/Images/image1.jpg",
             "/Images/image2.jpg",
