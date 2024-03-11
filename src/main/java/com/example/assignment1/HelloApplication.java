@@ -74,10 +74,10 @@ public class HelloApplication extends Application {
         for (int i = 0; i < THUMBNAILS.length; i++) {
             Image thumbnail = new Image(getClass().getResourceAsStream(THUMBNAILS[i]));
             ImageView thumbnailView = new ImageView(thumbnail);
-            thumbnailView.getStyleClass().add("thumbnail-image"); // Apply CSS class
+            thumbnailView.getStyleClass().add("thumbnail-image");
             thumbnailView.setFitWidth(150); // Set width to 150 pixels
             thumbnailView.setPreserveRatio(true);
-            int index = i; // For lambda expression
+            int index = i;
             thumbnailView.setOnMouseClicked(event -> displayFullImage(FULL_IMAGES[index]));
 
             if (i < 3) {
