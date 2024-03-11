@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
-    private static final String[] THUMBNAILS = {
+    static final String[] THUMBNAILS = {
             "/Images/thumbnail.jpg",
             "/Images/thumbnail1.jpg",
             "/Images/thumbnail2.jpg",
@@ -24,7 +24,7 @@ public class HelloApplication extends Application {
             "/Images/thumbnail7.jpg",
             "/Images/thumbnail8.jpg"
     };
-    private static final String[] FULL_IMAGES = {
+    static final String[] FULL_IMAGES = {
             "/Images/image.jpg",
             "/Images/image1.jpg",
             "/Images/image2.jpg",
@@ -35,11 +35,10 @@ public class HelloApplication extends Application {
             "/Images/image7.jpg",
             "/Images/image8.jpg"
     };
-    private ImageView fullImageView;
-    private int currentImageIndex = 0;
-    private VBox vbox;
-    private Text thumbnailHeading;
-
+    ImageView fullImageView;
+    int currentImageIndex = 0;
+    VBox vbox;
+    Text thumbnailHeading;
     @Override
     public void start(Stage primaryStage) throws Exception {
         vbox = new VBox(10);
@@ -92,7 +91,7 @@ public class HelloApplication extends Application {
         thumbnailsBox.getChildren().addAll(thumbnailsRow1, thumbnailsRow2, thumbnailsRow3);
         return thumbnailsBox;
     }
-    private void displayFullImage(String imageUrl) {
+    void displayFullImage(String imageUrl) {
         // Remove THUMBNAILS heading and thumbnails
         vbox.getChildren().remove(thumbnailHeading);
 
@@ -142,12 +141,12 @@ public class HelloApplication extends Application {
         vbox.getChildren().add(fullImageBox);
     }
 
-    private void navigateToPreviousImage() {
+   void navigateToPreviousImage() {
         currentImageIndex = (currentImageIndex - 1 + FULL_IMAGES.length) % FULL_IMAGES.length;
         displayFullImage(FULL_IMAGES[currentImageIndex]);
     }
 
-    private void navigateToNextImage() {
+    void navigateToNextImage() {
         currentImageIndex = (currentImageIndex + 1) % FULL_IMAGES.length;
         displayFullImage(FULL_IMAGES[currentImageIndex]);
     }
