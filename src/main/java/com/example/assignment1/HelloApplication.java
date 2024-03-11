@@ -54,7 +54,7 @@ public class HelloApplication extends Application {
         vbox.getChildren().add(displayThumbnails());
 
         Scene scene = new Scene(vbox, 800, 600);
-        // Link CSS file
+        // Linking CSS file
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Image Gallery");
@@ -75,7 +75,8 @@ public class HelloApplication extends Application {
             Image thumbnail = new Image(getClass().getResourceAsStream(THUMBNAILS[i]));
             ImageView thumbnailView = new ImageView(thumbnail);
             thumbnailView.getStyleClass().add("thumbnail-image");
-            thumbnailView.setFitWidth(150); // Set width to 150 pixels
+            // Set width to 150 pixels
+            thumbnailView.setFitWidth(150);
             thumbnailView.setPreserveRatio(true);
             int index = i;
             thumbnailView.setOnMouseClicked(event -> displayFullImage(FULL_IMAGES[index]));

@@ -16,22 +16,31 @@
 .thumbnail-image {
     -fx-border-color: black;
     -fx-border-width: 1px;
+     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0.5, 0, 0);
 }
 
 /* Style for full-size images */
 .full-image {
     -fx-border-color: black;
     -fx-border-width: 1px;
+     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0.5, 0, 0);
 }
 
 /* Style for navigation buttons */
 .button {
-    -fx-background-color: lightblue;
-    -fx-font-size: 14px;
-    -fx-padding: 5px 10px;
+      -fx-background-color: blue;
+        -fx-text-fill: white;
+        -fx-font-size: 14px;
+        -fx-padding: 5px 10px;
+        -fx-border-radius: 5px;
 }
 
 /* Hover effect for navigation buttons */
 .button:hover {
-    -fx-background-color: lightcyan;
+    -fx-background-color: lightblue;
+    -fx-text-fill: blue;
+}
+.heading {
+    font-size: 18px;
+    font-weight: bold;
 }
