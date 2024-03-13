@@ -39,12 +39,12 @@ public class HelloApplication extends Application {
     int currentImageIndex = 0;
     VBox vbox;
     Text thumbnailHeading;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         vbox = new VBox(10);
         vbox.setPadding(new Insets(10));
         vbox.setAlignment(Pos.CENTER);
-        vbox.setStyle("-fx-background-color: lightgray;");
 
         // Heading for thumbnails
         thumbnailHeading = new Text("THUMBNAILS");
@@ -60,6 +60,7 @@ public class HelloApplication extends Application {
         primaryStage.setTitle("Image Gallery");
         primaryStage.show();
     }
+
     private VBox displayThumbnails() {
         VBox thumbnailsBox = new VBox(10);
         thumbnailsBox.setAlignment(Pos.CENTER);
@@ -75,7 +76,6 @@ public class HelloApplication extends Application {
             Image thumbnail = new Image(getClass().getResourceAsStream(THUMBNAILS[i]));
             ImageView thumbnailView = new ImageView(thumbnail);
             thumbnailView.getStyleClass().add("thumbnail-image");
-            // Set width to 150 pixels
             thumbnailView.setFitWidth(150);
             thumbnailView.setPreserveRatio(true);
             int index = i;
@@ -92,6 +92,7 @@ public class HelloApplication extends Application {
         thumbnailsBox.getChildren().addAll(thumbnailsRow1, thumbnailsRow2, thumbnailsRow3);
         return thumbnailsBox;
     }
+
     void displayFullImage(String imageUrl) {
         // Remove THUMBNAILS heading and thumbnails
         vbox.getChildren().remove(thumbnailHeading);
@@ -142,7 +143,7 @@ public class HelloApplication extends Application {
         vbox.getChildren().add(fullImageBox);
     }
 
-   void navigateToPreviousImage() {
+    void navigateToPreviousImage() {
         currentImageIndex = (currentImageIndex - 1 + FULL_IMAGES.length) % FULL_IMAGES.length;
         displayFullImage(FULL_IMAGES[currentImageIndex]);
     }
